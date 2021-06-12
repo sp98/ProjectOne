@@ -7,6 +7,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.santoshpillai.projectone.ui.AppDestinations.ADDSTUDENTSCREEN
 import com.santoshpillai.projectone.ui.AppDestinations.HOMESCREEN
 import com.santoshpillai.projectone.ui.AppDestinations.NOTIFICATIONSCREEN
 import com.santoshpillai.projectone.ui.AppDestinations.PERFORMANCESCREEN
@@ -14,12 +15,14 @@ import com.santoshpillai.projectone.ui.AppDestinations.STUDENTDETAILSCREEN
 import com.santoshpillai.projectone.ui.home.HomeScreen
 import com.santoshpillai.projectone.ui.notification.Notification
 import com.santoshpillai.projectone.ui.performance.Performance
+import com.santoshpillai.projectone.ui.student.AddStudentScreen
 
 object AppDestinations {
     const val HOMESCREEN = "homeScreen"
     const val NOTIFICATIONSCREEN = "notificationScreen"
     const val PERFORMANCESCREEN = "performanceScreen"
     const val STUDENTDETAILSCREEN = "studentDetailScreen"
+    const val ADDSTUDENTSCREEN = "addStudentScreen"
 }
 
 
@@ -41,6 +44,10 @@ class NavActions(navController: NavController){
 
     val toStudentDetailScreen: () -> Unit = {
         navController.navigate(STUDENTDETAILSCREEN)
+    }
+
+    val toAddStudentScreen: () -> Unit = {
+        navController.navigate(ADDSTUDENTSCREEN)
     }
 
     private fun navigateAndPopUpToHome(to: String){
@@ -69,6 +76,10 @@ fun NavGraph(startDestination:String = HOMESCREEN){
 
         composable(NOTIFICATIONSCREEN){
             Notification(navActions)
+        }
+
+        composable(ADDSTUDENTSCREEN){
+            AddStudentScreen(navActions)
         }
     }
 }
