@@ -13,8 +13,8 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
+    primary = BlueGrey500,
+    primaryVariant = BlueGrey700,
     secondary = Teal200
 
     /* Other default colors to override
@@ -37,8 +37,8 @@ fun ProjectOneTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+        typography = ProjectOneTypography,
+        shapes = ProjectOneShapes,
         content = content
     )
 }

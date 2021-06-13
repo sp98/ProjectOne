@@ -4,4 +4,7 @@
     <string name="back">back</string>
     <string name="first_name_label">first name</string>
     <string name="last_name_label">last name</string>
+    <string name="mobile_number_label">mobile number</string>
+    <string name="has_learners_license">"has learner's license"</string>
+    <string name="has_valid_license">"has valid license"</string>
 </resources>

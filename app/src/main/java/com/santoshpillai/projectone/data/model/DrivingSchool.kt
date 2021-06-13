@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "driving_schools")
 data class DrivingSchool(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name= "school_id")
+    @ColumnInfo(name = "school_id")
     val schoolID: Long,
     @ColumnInfo(name = "school_name")
     val name: String,
@@ -28,5 +28,5 @@ data class Car(
 
 data class DrivingSchoolStudents(
     val drivingSchool: DrivingSchool,
-    val students : List<Student>
+    val students: List<Student>
 )
