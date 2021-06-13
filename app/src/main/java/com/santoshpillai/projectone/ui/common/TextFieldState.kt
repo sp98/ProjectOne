@@ -17,21 +17,21 @@ open class TextFieldState(
     open val isValid: Boolean
         get() = validator(text)
 
-    fun onFocusChange(focused: Boolean){
+    fun onFocusChange(focused: Boolean) {
         isFocused = focused
         if (focused) isFocusedDirty = true
     }
 
-    fun enableShowErrors(){
-        if (isFocusedDirty){
+    fun enableShowErrors() {
+        if (isFocusedDirty) {
             displayErrors = true
         }
     }
 
     fun showErrors() = !isValid && displayErrors
 
-    fun getError(): String?{
-        if (showErrors()){
+    fun getError(): String? {
+        if (showErrors()) {
             return error(text)
         }
         return null

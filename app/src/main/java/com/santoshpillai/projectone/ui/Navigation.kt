@@ -2,7 +2,6 @@ package com.santoshpillai.projectone.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -28,7 +27,7 @@ object AppDestinations {
 }
 
 
-class NavActions(navController: NavController){
+class NavActions(navController: NavController) {
 
     val navController = navController
 
@@ -52,11 +51,11 @@ class NavActions(navController: NavController){
         navController.navigate(ADDSTUDENTSCREEN)
     }
 
-    private fun navigateAndPopUpToHome(to: String){
-        navController.navigate(to){
-          popUpTo(navController.graph.findStartDestination().id){
-              saveState = true
-          }
+    private fun navigateAndPopUpToHome(to: String) {
+        navController.navigate(to) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
         }
     }
 }
@@ -65,26 +64,26 @@ class NavActions(navController: NavController){
 @Composable
 fun NavGraph(
     addStudentViewModel: AddStudentViewModel,
-    startDestination:String = HOMESCREEN){
+    startDestination: String = HOMESCREEN
+) {
 
-    // get all viewModels here
     val navController = rememberNavController()
-    val navActions = remember(navController){ NavActions(navController)}
-    
-    NavHost(navController = navController, startDestination = startDestination){
-        composable(HOMESCREEN){
+    val navActions = remember(navController) { NavActions(navController) }
+
+    NavHost(navController = navController, startDestination = startDestination) {
+        composable(HOMESCREEN) {
             HomeScreen(navActions)
         }
 
-        composable(PERFORMANCESCREEN){
+        composable(PERFORMANCESCREEN) {
             Performance(navActions)
         }
 
-        composable(NOTIFICATIONSCREEN){
+        composable(NOTIFICATIONSCREEN) {
             Notification(navActions)
         }
 
-        composable(ADDSTUDENTSCREEN){
+        composable(ADDSTUDENTSCREEN) {
             AddStudentScreen(
                 navActions,
                 addStudentViewModel
