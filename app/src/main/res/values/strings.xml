@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ProjectOne</string>
-    <string name="add_student_screen_title">Add New Student</string>
+    <string name="add_student_screen_title">Add Student</string>
     <string name="back">back</string>
+    <string name="first_name_label">first name</string>
+    <string name="last_name_label">last name</string>
 </resources>

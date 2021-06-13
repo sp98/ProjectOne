@@ -2,6 +2,7 @@ package com.santoshpillai.projectone.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -16,6 +17,7 @@ import com.santoshpillai.projectone.ui.home.HomeScreen
 import com.santoshpillai.projectone.ui.notification.Notification
 import com.santoshpillai.projectone.ui.performance.Performance
 import com.santoshpillai.projectone.ui.student.AddStudentScreen
+import com.santoshpillai.projectone.ui.student.AddStudentViewModel
 
 object AppDestinations {
     const val HOMESCREEN = "homeScreen"
@@ -61,7 +63,11 @@ class NavActions(navController: NavController){
 
 
 @Composable
-fun NavGraph(startDestination:String = HOMESCREEN){
+fun NavGraph(
+    addStudentViewModel: AddStudentViewModel,
+    startDestination:String = HOMESCREEN){
+
+    // get all viewModels here
     val navController = rememberNavController()
     val navActions = remember(navController){ NavActions(navController)}
     
@@ -79,7 +85,10 @@ fun NavGraph(startDestination:String = HOMESCREEN){
         }
 
         composable(ADDSTUDENTSCREEN){
-            AddStudentScreen(navActions)
+            AddStudentScreen(
+                navActions,
+                addStudentViewModel
+            )
         }
     }
 }
