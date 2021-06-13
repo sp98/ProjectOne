@@ -37,8 +37,8 @@ fun ProjectOneTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+        typography = ProjectOneTypography,
+        shapes = ProjectOneShapes,
         content = content
     )
 }

@@ -1,11 +1,9 @@
 package com.santoshpillai.projectone.ui.common
 
-import android.graphics.drawable.Icon
 import android.util.Log
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
@@ -21,10 +19,13 @@ import com.santoshpillai.projectone.ui.AppDestinations.PERFORMANCESCREEN
 import com.santoshpillai.projectone.ui.NavActions
 
 
-sealed class BottomBarItem(val name:String, val route:String, val icon: ImageVector){
-    object HomeScreen: BottomBarItem("Home", HOMESCREEN, Icons.Filled.Home)
-    object NotificationScreen: BottomBarItem("Notification", NOTIFICATIONSCREEN, Icons.Filled.Notifications)
-    object PerformanceScreen: BottomBarItem("Performance", PERFORMANCESCREEN, Icons.Filled.QueryStats)
+sealed class BottomBarItem(val name: String, val route: String, val icon: ImageVector) {
+    object HomeScreen : BottomBarItem("Home", HOMESCREEN, Icons.Filled.Home)
+    object NotificationScreen :
+        BottomBarItem("Notification", NOTIFICATIONSCREEN, Icons.Filled.Notifications)
+
+    object PerformanceScreen :
+        BottomBarItem("Performance", PERFORMANCESCREEN, Icons.Filled.QueryStats)
 }
 
 val BottomBarItems = listOf(
@@ -34,26 +35,26 @@ val BottomBarItems = listOf(
 )
 
 @Composable
-fun AppBottomBar(navActions: NavActions){
+fun AppBottomBar(navActions: NavActions) {
     BottomNavigation {
         val navBackStackEntry by navActions.navController.currentBackStackEntryAsState()
-        val currentDestination  = navBackStackEntry?.destination
+        val currentDestination = navBackStackEntry?.destination
         BottomBarItems.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(item.icon , item.name)},
+                icon = { Icon(item.icon, item.name) },
                 onClick = {
-                          navigate(navActions, item.route)
+                    navigate(navActions, item.route)
                 },
-                selected = currentDestination?.hierarchy?.any {it.route == item.route} == true
+                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true
             )
         }
     }
 }
 
 
-fun navigate(navActions: NavActions, to:String){
+fun navigate(navActions: NavActions, to: String) {
     Log.i("testing", "to $to")
-    when(to){
+    when (to) {
         HOMESCREEN -> navActions.toHomeScreen()
         NOTIFICATIONSCREEN -> navActions.toNotificationScreen()
         PERFORMANCESCREEN -> navActions.toPerformanceScreen()

@@ -6,11 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.santoshpillai.projectone.ui.NavGraph
-import com.santoshpillai.projectone.ui.home.HomeScreen
 import com.santoshpillai.projectone.ui.student.AddStudentViewModel
 import com.santoshpillai.projectone.ui.theme.ProjectOneTheme
 
@@ -29,11 +27,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-
 @Composable
 fun ProjectOneApp(
-    addStudentViewModel: AddStudentViewModel) {
+    addStudentViewModel: AddStudentViewModel
+) {
     NavGraph(addStudentViewModel)
 }
 

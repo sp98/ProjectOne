@@ -5,7 +5,7 @@ class RequiredTextFieldState : TextFieldState(
     error = ::requiredFieldError
 )
 
-fun requiredFieldValidator(text: String):Boolean{
+fun requiredFieldValidator(text: String): Boolean {
     return text.isNotEmpty()
 }
 
