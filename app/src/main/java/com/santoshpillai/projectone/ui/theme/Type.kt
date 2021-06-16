@@ -101,8 +101,8 @@ val ProjectOneTypography = Typography(
     overline = TextStyle(
         fontFamily = AppFontFamily,
         fontSize = 12.sp,
-        fontWeight = FontWeight.SemiBold,
-        lineHeight = 16.sp,
-        letterSpacing = 1.sp
+        fontWeight = FontWeight.W500,
+        //lineHeight = 16.sp,
+        //letterSpacing = 1.sp
     ),
 )

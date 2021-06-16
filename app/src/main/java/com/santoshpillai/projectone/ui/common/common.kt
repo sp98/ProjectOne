@@ -36,63 +36,76 @@ fun ScreenTitle(title:String){
 }
 
 @Composable
+fun AppButton(
+    btnText: String,
+    onClick: () -> Unit,
+    isEnabled : Boolean
+){
+    Button(
+        onClick = onClick,
+        enabled = isEnabled
+    ) {
+        Text(btnText, style = MaterialTheme.typography.button)
+    }
+}
+
+@Composable
 fun HorizontalRadioButtonMenu(
     options: List<String>,
     selectedOption: String,
     onOptionSelect: (String) -> Unit
 ) {
-    val borderColor = if (selectedOption.isNotEmpty()){
-        MaterialTheme.colors.primary.copy(alpha = 0.5f)
-    }else{
-        MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
-    }
-
-    val backgroundColor = if (selectedOption.isNotEmpty()){
-        MaterialTheme.colors.primary.copy(alpha = 0.12f)
-    } else {
-        MaterialTheme.colors.background
-    }
-    Surface(
-        shape = MaterialTheme.shapes.small,
-        modifier = Modifier
-            .padding(vertical = 8.dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = borderColor
-        ),
-    ){
     Row(
         Modifier
             .fillMaxWidth()
-            .background(backgroundColor),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        options.forEach { text ->
-            Row(
+        options.forEachIndexed { i, text ->
+            val borderColor = if (selectedOption == text){
+                MaterialTheme.colors.primary.copy(alpha = 0.5f)
+            }else{
+                MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+            }
+
+            val backgroundColor = if (selectedOption == text){
+                MaterialTheme.colors.primary.copy(alpha = 0.12f)
+            } else {
+                MaterialTheme.colors.background
+            }
+            Surface(
+                shape = MaterialTheme.shapes.small,
                 modifier = Modifier
-                    .selectable(
-                        selected = (text == selectedOption),
-                        onClick = { onOptionSelect(text) },
-                        role = Role.RadioButton,
-                    )
-                    .weight(1f)
-                    .padding(vertical = 8.dp, horizontal = 8.dp),
-                horizontalArrangement = Arrangement.SpaceAround
+                    .padding(vertical = 8.dp)
+                    .weight(1f),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = borderColor
+                ),
             ) {
-                Text(
-                    text = text,
-                    style = MaterialTheme.typography.body2,
-                )
-                RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = null,
-                )
+                Row(
+                    modifier = Modifier
+                        .selectable(
+                            selected = (text == selectedOption),
+                            onClick = { onOptionSelect(text) },
+                            role = Role.RadioButton,
+                        )
+                        .background(backgroundColor)
+                        .padding(vertical = 8.dp, horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    FormLabel(text)
+                    RadioButton(
+                        selected = (text == selectedOption),
+                        onClick = null,
+                    )
+                }
+            }
+            // don't add spacer after last checkbox
+            if (i < options.size-1){
+                Spacer(Modifier.weight(.1f))
             }
         }
-        }
     }
-
 }
 
 @Composable
@@ -148,10 +161,7 @@ fun AppCheckbox(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            Text(
-                text = label,
-                style = MaterialTheme.typography.subtitle2
-            )
+            FormLabel(label)
             Checkbox(
                 checked = checked,
                 onCheckedChange = null,
@@ -160,7 +170,6 @@ fun AppCheckbox(
     }
 
 }
-
 
 
 @Preview(name = "HorizontalRadioButtonMenu")

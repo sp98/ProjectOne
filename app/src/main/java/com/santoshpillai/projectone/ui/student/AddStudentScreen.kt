@@ -21,8 +21,15 @@ fun AddStudentScreen(
     addStudentViewModel: AddStudentViewModel
 
 ) {
+    val showSaveButton = addStudentViewModel.showAddButton()
     Scaffold(
-        topBar = { AddStudentTopBar(navActions) },
+        topBar = {
+            AddStudentTopBar(
+                navActions,
+                addStudentViewModel,
+                showSaveButton,
+            )
+        },
         bottomBar = {},
     ) {
         AddStudentForm(addStudentViewModel)
@@ -30,16 +37,44 @@ fun AddStudentScreen(
 }
 
 @Composable
-fun AddStudentTopBar(navActions: NavActions) {
+fun AddStudentTopBar(
+    navActions: NavActions,
+    viewModel: AddStudentViewModel,
+    showSaveButton: Boolean
+) {
     TopAppBar(
         title = { ScreenTitle(stringResource(R.string.add_student_screen_title)) },
         navigationIcon = {
             IconButton(
-                onClick = { navActions.toHomeScreen() }
+                onClick = {
+                    navActions.toHomeScreen()
+                    viewModel.reset()
+                }
             ) {
                 Icon(Icons.Filled.ArrowBack, stringResource(R.string.back))
             }
+        },
+        actions = {
+            AddStudentTopBarActions(
+                onAdd = {
+                    navActions.toHomeScreen()
+                    viewModel.reset()
+                },
+                showSaveButton = showSaveButton
+            )
         }
+    )
+}
+
+@Composable
+fun AddStudentTopBarActions(
+    onAdd: () -> Unit,
+    showSaveButton: Boolean
+) {
+    AppButton(
+        btnText = "OK",
+        onClick = onAdd,
+        isEnabled = showSaveButton
     )
 }
 
@@ -52,11 +87,11 @@ fun AddStudentForm(
     val lastName = addStudentViewModel.lastName
     val mobileNumber = addStudentViewModel.mobileNumber
     val gender = addStudentViewModel.gender
-    val hasLearnersLicense = addStudentViewModel.hasLearnerLicense
-    val hasValidLicense = addStudentViewModel.hasValidLicense
+    val licenseType = addStudentViewModel.licenseType
+
     Column(
         modifier = Modifier
-            .padding(10.dp)
+            .padding(20.dp)
             .fillMaxWidth()
             .fillMaxHeight()
 
@@ -64,22 +99,32 @@ fun AddStudentForm(
         TextField(firstName, stringResource(R.string.first_name_label))
         TextField(lastName, stringResource(R.string.last_name_label))
         TextField(mobileNumber, stringResource(R.string.mobile_number_label))
+
+        Spacer(modifier = Modifier.height(8.dp))
+        FormHelpText(text = stringResource(R.string.select_gender_label))
         GenderRadioButton(
-            addStudentViewModel.availableGenders,
-            gender,
+            options = addStudentViewModel.availableGenders,
+            selectedOption = gender,
         ) { addStudentViewModel.onGenderChange(it) }
-        AppCheckbox(
-            stringResource(R.string.has_learners_license),
-            hasLearnersLicense,
-            addStudentViewModel::onHasLearnerLicenseChange
-        )
-        AppCheckbox(
-            stringResource(R.string.has_valid_license),
-            hasValidLicense,
-            addStudentViewModel::onHasValidLicenseChange
-        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+        FormHelpText(text = stringResource(R.string.select_license_type))
+        LicenseTypeRadioButton(
+            options = addStudentViewModel.availableLicenseTypes,
+            selectedOption = licenseType
+        ) { addStudentViewModel.onLicenseTypeChange(it) }
+
+        // TODO: Add date picker to set DOB
     }
 
+}
+
+@Composable
+fun FormHelpText(text: String) {
+    Text(
+        text,
+        style = MaterialTheme.typography.overline
+    )
 }
 
 @Composable
@@ -122,6 +167,18 @@ fun TextFieldError(
     )
 }
 
+@Composable
+fun LicenseTypeRadioButton(
+    options: List<String>,
+    selectedOption: String,
+    onOptionSelect: (String) -> Unit
+) {
+    HorizontalRadioButtonMenu(
+        options = options,
+        selectedOption = selectedOption,
+        onOptionSelect = onOptionSelect
+    )
+}
 
 @Composable
 fun GenderRadioButton(
@@ -134,8 +191,6 @@ fun GenderRadioButton(
         selectedOption = selectedOption,
         onOptionSelect = onOptionSelect
     )
-
-
 }
 
 @Preview(name = "Add Student Form")

@@ -8,26 +8,40 @@ import com.santoshpillai.projectone.ui.common.ContactTextFieldState
 import com.santoshpillai.projectone.ui.common.RequiredTextFieldState
 
 class AddStudentViewModel : ViewModel() {
-    val firstName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
-    val lastName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
-    val mobileNumber: ContactTextFieldState by mutableStateOf(ContactTextFieldState())
+    var firstName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
+    var lastName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
+    var mobileNumber: ContactTextFieldState by mutableStateOf(ContactTextFieldState())
 
-    val availableGenders = listOf<String>("male", "female")
+    val availableGenders = listOf<String>("MALE", "FEMALE")
     var gender: String by mutableStateOf("")
-    var hasLearnerLicense: Boolean by mutableStateOf(false)
-    var hasValidLicense: Boolean by mutableStateOf(false)
 
+    val availableLicenseTypes = listOf("LEARNER'S", "REGULAR")
+    var licenseType: String by mutableStateOf("")
 
     fun onGenderChange(selectedGender: String){
        gender = selectedGender
     }
 
-    fun onHasLearnerLicenseChange(hasLicense: Boolean){
-        hasLearnerLicense = hasLicense
+    fun onLicenseTypeChange(type: String){
+        licenseType = type
     }
 
-    fun onHasValidLicenseChange(hasLicense: Boolean){
-        hasValidLicense = hasLicense
+    fun showAddButton(): Boolean{
+        return when {
+            firstName.text.isEmpty() -> false
+            lastName.text.isEmpty() -> false
+            !mobileNumber.isValid -> false
+            gender.isEmpty() -> false
+            licenseType.isEmpty() -> false
+            else -> true
+        }
     }
 
+    fun reset() {
+        firstName = RequiredTextFieldState()
+        lastName = RequiredTextFieldState()
+        mobileNumber= ContactTextFieldState()
+        gender = ""
+        licenseType = ""
+    }
 }
