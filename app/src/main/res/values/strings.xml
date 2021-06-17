@@ -5,8 +5,10 @@
     <string name="first_name_label">FIRST NAME</string>
     <string name="last_name_label">LAST NAME</string>
     <string name="mobile_number_label">MOBILE NUMBER</string>
+    <string name="amount_paid_label">AMOUNT PAID</string>
     <string name="has_learners_license">"LEARNER'S LICENSE"</string>
     <string name="has_valid_license">VALID LICENSE</string>
     <string name="select_gender_label">Gender</string>
     <string name="select_license_type">License Type</string>
+    <string name= "Select_payment_status">Payment Status</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.santoshpillai.projectone.ui.NavGraph
@@ -15,6 +16,7 @@ import com.santoshpillai.projectone.ui.student.AddStudentViewModel
 import com.santoshpillai.projectone.ui.theme.ProjectOneTheme
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val addStudentVM by viewModels<AddStudentViewModel>()
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun ProjectOneApp(
     addStudentViewModel: AddStudentViewModel

@@ -14,4 +14,4 @@ fun contactFieldValidator(contact: String): Boolean {
     return phoneNumberRegex.matches(contact)
 }
 
-fun contactFieldError(contact: String) = "invalid contact: $contact"
+fun contactFieldError(phoneNumber: String) = "Invalid: $phoneNumber. Must be 10 digit phone number"

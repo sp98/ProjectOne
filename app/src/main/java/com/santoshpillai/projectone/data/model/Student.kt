@@ -38,10 +38,10 @@ data class Student(
 
 
 data class Address(
-    val street: String,
-    val state: String,
-    val city: String,
-    val country: String,
+    val street: String = "",
+    val state: String = "",
+    val city: String = "",
+    val country: String = "",
     @ColumnInfo(name = "pin_code")
-    val pinCode: Int
+    val pinCode: Int = 0
 )
