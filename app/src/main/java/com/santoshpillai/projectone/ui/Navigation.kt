@@ -2,6 +2,7 @@ package com.santoshpillai.projectone.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -61,6 +62,7 @@ class NavActions(navController: NavController) {
 }
 
 
+@ExperimentalComposeUiApi
 @Composable
 fun NavGraph(
     addStudentViewModel: AddStudentViewModel,
