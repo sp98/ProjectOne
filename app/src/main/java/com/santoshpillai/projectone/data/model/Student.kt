@@ -9,9 +9,9 @@ import androidx.room.PrimaryKey
 data class Student(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "student_id")
-    val studentID: Long,
+    val studentID: Long = 0L,
     @ColumnInfo(name = "teacher_id")
-    val teacherID: Long,
+    val teacherID: Long = 0L,
     @ColumnInfo(name = "first_name")
     val firstName: String,
     @ColumnInfo(name = "last_name")
@@ -19,20 +19,20 @@ data class Student(
     @ColumnInfo(name = "contact")
     val contact: String,
     @ColumnInfo(name = "date_of_birth")
-    val dateOfBirth: String,
+    val dateOfBirth: String = "18",
     @ColumnInfo(name = "gender")
     val gender: String,
-    @Embedded val address: Address,
-    @ColumnInfo(name = "has_learners_license")
-    val hasLearnersLicense: Boolean,
-    @ColumnInfo(name = "paid")
-    val paid: Boolean,
-    @ColumnInfo(name = "partial_payment")
-    val partialPayment: Long,
+    @Embedded val address: Address = Address(),
+    @ColumnInfo(name = "license_type")
+    val licenseType: String,
+    @ColumnInfo(name = "payment_status")
+    val paymentStatus: String,
+    @ColumnInfo(name = "paid_amount")
+    val paidAmount: Long,
     @ColumnInfo(name = "test_data")
-    val testDate: String,
+    val testDate: String = "",
     @ColumnInfo(name = "is_Active")
-    val isActive: Boolean
+    val isActive: Boolean = true
 )
 
 

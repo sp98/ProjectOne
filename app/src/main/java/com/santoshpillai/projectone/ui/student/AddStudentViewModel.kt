@@ -1,14 +1,28 @@
 package com.santoshpillai.projectone.ui.student
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.santoshpillai.projectone.data.local.StudentRepository
+import com.santoshpillai.projectone.data.model.Student
 import com.santoshpillai.projectone.ui.common.ContactTextFieldState
 import com.santoshpillai.projectone.ui.common.PaidAmountState
 import com.santoshpillai.projectone.ui.common.RequiredTextFieldState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddStudentViewModel : ViewModel() {
+@HiltViewModel
+class AddStudentViewModel @Inject constructor(
+    private val studentRepository: StudentRepository
+) : ViewModel() {
+    override fun onCleared() {
+        super.onCleared()
+        println("view model is cleared")
+    }
     var firstName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
     var lastName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
     var mobileNumber: ContactTextFieldState by mutableStateOf(ContactTextFieldState())
@@ -56,5 +70,29 @@ class AddStudentViewModel : ViewModel() {
         gender = ""
         licenseType = ""
         paymentStatus = ""
+    }
+
+    fun addStudent(){
+        val newStudent = Student(
+            firstName = firstName.text,
+            lastName = lastName.text,
+            contact = mobileNumber.text,
+            gender = gender,
+            licenseType = licenseType,
+            paymentStatus = paymentStatus,
+            paidAmount = getPaidAmount(paidAmount)
+        )
+        Log.i("adding student", "$newStudent")
+        viewModelScope.launch {
+            studentRepository.insertNewStudent(newStudent)
+        }
+    }
+
+
+    private fun getPaidAmount(amount: PaidAmountState):Long{
+        if (amount.text != ""){
+            return amount.text.toLong()
+        }
+        return 0
     }
 }

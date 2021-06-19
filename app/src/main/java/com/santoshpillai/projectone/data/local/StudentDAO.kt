@@ -11,7 +11,7 @@ import com.santoshpillai.projectone.data.model.Student
 interface StudentDAO {
 
     @Insert
-    fun insert(student: Student)
+    suspend fun insert(student: Student)
 
     @Delete
     fun delete(student: Student)

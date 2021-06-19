@@ -14,7 +14,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.santoshpillai.projectone.ui.NavGraph
 import com.santoshpillai.projectone.ui.student.AddStudentViewModel
 import com.santoshpillai.projectone.ui.theme.ProjectOneTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {

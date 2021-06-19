@@ -64,6 +64,7 @@ fun AddStudentTopBar(
         actions = {
             AddStudentTopBarActions(
                 onAdd = {
+                    viewModel.addStudent()
                     navActions.toHomeScreen()
                     viewModel.reset()
                 },
