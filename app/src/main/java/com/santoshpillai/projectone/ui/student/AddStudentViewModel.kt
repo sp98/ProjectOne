@@ -19,10 +19,6 @@ import javax.inject.Inject
 class AddStudentViewModel @Inject constructor(
     private val studentRepository: StudentRepository
 ) : ViewModel() {
-    override fun onCleared() {
-        super.onCleared()
-        println("view model is cleared")
-    }
     var firstName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
     var lastName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
     var mobileNumber: ContactTextFieldState by mutableStateOf(ContactTextFieldState())
@@ -74,9 +70,9 @@ class AddStudentViewModel @Inject constructor(
 
     fun addStudent(){
         val newStudent = Student(
-            firstName = firstName.text,
-            lastName = lastName.text,
-            contact = mobileNumber.text,
+            firstName = firstName.text.trim(),
+            lastName = lastName.text.trim(),
+            contact = mobileNumber.text.trim(),
             gender = gender,
             licenseType = licenseType,
             paymentStatus = paymentStatus,
@@ -91,7 +87,7 @@ class AddStudentViewModel @Inject constructor(
 
     private fun getPaidAmount(amount: PaidAmountState):Long{
         if (amount.text != ""){
-            return amount.text.toLong()
+            return amount.text.trim().toLong()
         }
         return 0
     }

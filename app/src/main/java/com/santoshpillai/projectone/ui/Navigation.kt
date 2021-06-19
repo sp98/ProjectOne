@@ -1,6 +1,9 @@
 package com.santoshpillai.projectone.ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavController
@@ -14,6 +17,7 @@ import com.santoshpillai.projectone.ui.AppDestinations.NOTIFICATIONSCREEN
 import com.santoshpillai.projectone.ui.AppDestinations.PERFORMANCESCREEN
 import com.santoshpillai.projectone.ui.AppDestinations.STUDENTDETAILSCREEN
 import com.santoshpillai.projectone.ui.home.HomeScreen
+import com.santoshpillai.projectone.ui.home.HomeScreenViewModel
 import com.santoshpillai.projectone.ui.notification.Notification
 import com.santoshpillai.projectone.ui.performance.Performance
 import com.santoshpillai.projectone.ui.student.AddStudentScreen
@@ -62,9 +66,11 @@ class NavActions(navController: NavController) {
 }
 
 
+@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun NavGraph(
+    homeScreenViewModel: HomeScreenViewModel,
     addStudentViewModel: AddStudentViewModel,
     startDestination: String = HOMESCREEN
 ) {
@@ -74,7 +80,10 @@ fun NavGraph(
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(HOMESCREEN) {
-            HomeScreen(navActions)
+            HomeScreen(
+                navActions,
+                homeScreenViewModel
+            )
         }
 
         composable(PERFORMANCESCREEN) {
