@@ -79,7 +79,7 @@ fun AddStudentTopBarActions(
     showSaveButton: Boolean
 ) {
     AppButton(
-        btnText = "OK",
+        btnText = stringResource(R.string.ok),
         onClick = onAdd,
         isEnabled = showSaveButton
     )

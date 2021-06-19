@@ -22,7 +22,6 @@ data class Student(
     val dateOfBirth: String,
     @ColumnInfo(name = "gender")
     val gender: String,
-    @ColumnInfo(name = "address")
     @Embedded val address: Address,
     @ColumnInfo(name = "has_learners_license")
     val hasLearnersLicense: Boolean,
