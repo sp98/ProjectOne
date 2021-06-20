@@ -16,6 +16,6 @@ interface StudentDAO {
     @Delete
     fun delete(student: Student)
 
-    @Query("SELECT * FROM students ORDER BY student_id ASC")
+    @Query("SELECT * FROM students ORDER BY student_id DESC")
     fun getAllStudents(): LiveData<List<Student>>
 }
