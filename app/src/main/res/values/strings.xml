@@ -10,7 +10,7 @@
     <string name="has_valid_license">VALID LICENSE</string>
     <string name="select_gender_label">Gender</string>
     <string name="select_license_type">License Type</string>
-    <string name= "Select_payment_status">Payment Status</string>
+    <string name="Select_payment_status">Payment Status</string>
 
     // btn
     <string name="ok">OK</string>

@@ -1,12 +1,6 @@
 package com.santoshpillai.projectone.ui.home
 
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.santoshpillai.projectone.data.local.StudentDAO
+import androidx.lifecycle.*
 import com.santoshpillai.projectone.data.local.StudentRepository
 import com.santoshpillai.projectone.data.model.Student
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +11,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val studentRepository: StudentRepository
-): ViewModel() {
+) : ViewModel() {
 
-    lateinit var students: LiveData<List<Student>>
+
+    private var _getStudents: LiveData<List<Student>> = MutableLiveData()
+    val getStudents: LiveData<List<Student>>
+        get() = _getStudents
 
     init {
-        viewModelScope.launch(Dispatchers.IO){
-            students = studentRepository.getAllStudents()
+        // TODO: Understand liveData Scope
+        viewModelScope.launch(Dispatchers.IO) {
+            _getStudents = studentRepository.getAllStudents()
         }
     }
-
 }

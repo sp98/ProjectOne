@@ -4,14 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.santoshpillai.projectone.ui.NavGraph
 import com.santoshpillai.projectone.ui.home.HomeScreenViewModel
 import com.santoshpillai.projectone.ui.student.AddStudentViewModel
@@ -32,7 +30,8 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     ProjectOneApp(
                         homeScreenVM,
-                        addStudentVM)
+                        addStudentVM
+                    )
                 }
             }
         }

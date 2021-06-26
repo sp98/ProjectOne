@@ -2,8 +2,6 @@ package com.santoshpillai.projectone.ui
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavController

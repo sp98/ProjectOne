@@ -18,14 +18,14 @@ abstract class AppDatabase : RoomDatabase() {
         // threads. Value of INSTANCE is never cached and all the reads and writes done from the
         // main memory. So changes made by one thread is visible to all the threads immediately.
         @Volatile
-        private var INSTANCE : AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
             // only one thread of execution can enter the synchronized piece of code.
             // This means that the database can be initialized only once.
-            synchronized(this){
+            synchronized(this) {
                 var instance = INSTANCE
-                if (instance == null){
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,

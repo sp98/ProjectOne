@@ -24,26 +24,25 @@ fun HomeScreen(
     navActions: NavActions,
     homeScreenVm: HomeScreenViewModel,
 ) {
-    val students by homeScreenVm.students.observeAsState()
+    val students by homeScreenVm.getStudents.observeAsState()
 
     Scaffold(
-        topBar = {HomeScreenTopBar()},
+        topBar = { HomeScreenTopBar() },
         bottomBar = {
-           AppBottomBar(navActions)
+            AppBottomBar(navActions)
         },
         floatingActionButton = { AddStudentButton(navActions) }
     ) {
         // TODO Need to add "androidx.compose.runtime:runtime-livedata:$compose_version" to use ObserveAsState()
 
-        Box(modifier = Modifier.padding(it)){
-            ShowStudents(students)
+        Box(modifier = Modifier.padding(it)) {
+           ShowStudents(students = students)
         }
     }
 }
 
-
 @Composable
-fun HomeScreenTopBar(){
+fun HomeScreenTopBar() {
     TopAppBar(
         title = {},
         navigationIcon = {
@@ -61,7 +60,7 @@ fun HomeScreenTopBar(){
 
 
 @Composable
-fun HomeScreenActions(){
+fun HomeScreenActions() {
     IconButton(
         onClick = { /*TODO*/ }
     ) {
@@ -92,25 +91,24 @@ fun AddStudentButton(navActions: NavActions) {
 @Composable
 fun ShowStudents(
     students: List<Student>?
-){
+) {
     Column() {
-        if (students != null){
-        LazyColumn {
-            items(items = students) { student ->
-                ListItem(
-                    icon = {
-                        Icon(
-                            Icons.Filled.Person,
-                            contentDescription = null
-                        )
-                    },
-                    text = { Text(text = "${student.firstName} ${student.lastName}") },
-                    secondaryText = { Text(text = "${student.contact}") },
-                )
-                Divider()
+        if (students != null) {
+            LazyColumn {
+                items(items = students) { student ->
+                    ListItem(
+                        icon = {
+                            Icon(
+                                Icons.Filled.Person,
+                                contentDescription = null
+                            )
+                        },
+                        text = { Text(text = "${student.firstName} ${student.lastName}") },
+                        secondaryText = { Text(text = "${student.contact}") },
+                    )
+                    Divider()
+                }
             }
-        }
-
         }
     }
 }
