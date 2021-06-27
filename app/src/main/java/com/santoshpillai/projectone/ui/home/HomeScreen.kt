@@ -38,6 +38,7 @@ fun HomeScreen(
         students = students,
         selectedStudents = selectedStudents,
         onStudentSelect = homeScreenVm::onStudentSelect,
+        onClearSelections = homeScreenVm::onClearSelections,
         screenState = screeState
     )
 }
@@ -50,11 +51,15 @@ fun HomeScreenContent(
     students: List<Student>?,
     selectedStudents: List<Long>,
     onStudentSelect: (Long) -> Unit,
+    onClearSelections: () -> Unit,
     screenState: Event<ToolBarState>?
 ){
     Scaffold(
         topBar = {
-            HomeScreenTopBar(screenState)
+            HomeScreenTopBar(
+                state = screenState,
+                onClearSelections = onClearSelections
+            )
         },
         bottomBar = {
             AppBottomBar(navActions)
@@ -77,15 +82,23 @@ fun HomeScreenContent(
 
 @Composable
 fun HomeScreenTopBar(
-    state: Event<ToolBarState>?
+    state: Event<ToolBarState>?,
+    onClearSelections: () -> Unit,
 ) {
-    when (state?.peekContent()) {
+    when (val state = state?.peekContent()) {
         is ToolBarState.MultiSelectionState -> {
             TopAppBar(
-                title = { Text("Selected ") }
+                title = { Text("${state.selectedStudents} Selected ") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = { onClearSelections() }
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "")
+                    }
+                }
             )
         }
-        else -> {
+        is ToolBarState.SearchViewState -> {
             TopAppBar(
                 title = {},
                 navigationIcon = {
@@ -132,6 +145,7 @@ fun AddStudentButton(navActions: NavActions) {
         Icon(Icons.Filled.Add, "add")
     }
 }
+
 
 @ExperimentalMaterialApi
 @Composable

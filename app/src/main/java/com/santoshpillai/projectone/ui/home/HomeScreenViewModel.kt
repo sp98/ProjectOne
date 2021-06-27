@@ -21,7 +21,7 @@ class HomeScreenViewModel @Inject constructor(
     private val studentRepository: StudentRepository
 ) : ViewModel() {
 
-    private val _toolBarState = MutableLiveData<Event<ToolBarState>>()
+    private val _toolBarState = MutableLiveData<Event<ToolBarState>>(Event(ToolBarState.SearchViewState))
     val toolBarState: LiveData<Event<ToolBarState>>
         get() = _toolBarState
 
@@ -41,6 +41,17 @@ class HomeScreenViewModel @Inject constructor(
         } else{
             selectedStudents + listOf(id)
         }
+
+        if (selectedStudents.isNotEmpty()){
+            _toolBarState.value = Event(ToolBarState.MultiSelectionState(selectedStudents.size))
+        } else {
+            _toolBarState.value = Event(ToolBarState.SearchViewState)
+        }
+    }
+
+    fun onClearSelections(){
+        selectedStudents = listOf()
+        _toolBarState.value = Event(ToolBarState.SearchViewState)
     }
 
     // init block

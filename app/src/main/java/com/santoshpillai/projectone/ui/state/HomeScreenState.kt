@@ -9,6 +9,6 @@ sealed class ToolBarState {
     2. Selected Students State
     3. Deleted Students State
      */
-    data class MultiSelectionState(val students: List<Student>) : ToolBarState()
+    data class MultiSelectionState(val selectedStudents: Int) : ToolBarState()
     object SearchViewState : ToolBarState()
 }
