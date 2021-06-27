@@ -12,6 +12,7 @@ import com.santoshpillai.projectone.data.model.Student
 import com.santoshpillai.projectone.ui.common.ContactTextFieldState
 import com.santoshpillai.projectone.ui.common.PaidAmountState
 import com.santoshpillai.projectone.ui.common.RequiredTextFieldState
+import com.santoshpillai.projectone.ui.state.Event
 import com.santoshpillai.projectone.ui.state.StudentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +23,8 @@ class AddStudentViewModel @Inject constructor(
     private val studentRepository: StudentRepository
 ) : ViewModel() {
 
-    private var _addStudentResult: LiveData<StudentState> = MutableLiveData()
-    val addStudentResult: LiveData<StudentState>
+    private var _addStudentResult: LiveData<Event<StudentState>> = MutableLiveData()
+    val addStudentResult: LiveData<Event<StudentState>>
         get() = _addStudentResult
 
     var firstName: RequiredTextFieldState by mutableStateOf(RequiredTextFieldState())
@@ -90,12 +91,12 @@ class AddStudentViewModel @Inject constructor(
         // TODO: learn about liveData and coroutines
         _addStudentResult = liveData(Dispatchers.IO) {
             try {
-                emit(StudentState.InProgress())
+                emit(Event(StudentState.InProgress()))
                 studentRepository.insertNewStudent(newStudent)
-                emit(StudentState.Success(listOf(newStudent)))
+                emit(Event(StudentState.Success(listOf(newStudent))))
 
             } catch (e: Exception) {
-                emit(StudentState.Error(e.message.toString()))
+                emit(Event(StudentState.Error(e.message.toString())))
             }
         }
     }

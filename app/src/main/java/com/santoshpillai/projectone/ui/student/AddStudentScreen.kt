@@ -45,10 +45,10 @@ fun AddStudentScreen(
         },
         bottomBar = {},
     ) {
-        when (val resultData = addStudentResult.value) {
+        when (val state = addStudentResult.value?.getContentIfNotHandled()) {
             null -> AddStudentForm(addStudentViewModel)
             is StudentState.Success -> {
-                println("successfully added new student ${resultData.students?.get(0)?.firstName}")
+                println("successfully added new student ${state.students?.get(0)?.firstName}")
                 addStudentViewModel.reset()
                 navActions.toHomeScreen()
             }
