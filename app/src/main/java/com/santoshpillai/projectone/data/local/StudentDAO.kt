@@ -13,8 +13,8 @@ interface StudentDAO {
     @Insert
     suspend fun insert(student: Student)
 
-    @Delete
-    fun delete(student: Student)
+    @Query(" DELETE FROM students WHERE student_id=:studentID")
+    fun delete(studentID: Long)
 
     @Query("SELECT * FROM students ORDER BY student_id DESC")
     fun getAllStudents(): LiveData<List<Student>>

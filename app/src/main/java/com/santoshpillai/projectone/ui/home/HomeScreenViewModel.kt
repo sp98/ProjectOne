@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santoshpillai.projectone.data.local.StudentRepository
 import com.santoshpillai.projectone.data.model.Student
+import com.santoshpillai.projectone.ui.state.AppBottomSheetState
 import com.santoshpillai.projectone.ui.state.Event
 import com.santoshpillai.projectone.ui.state.ToolBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +21,21 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val studentRepository: StudentRepository
 ) : ViewModel() {
-
     private val _toolBarState = MutableLiveData<Event<ToolBarState>>(Event(ToolBarState.SearchViewState))
     val toolBarState: LiveData<Event<ToolBarState>>
         get() = _toolBarState
+
+    private val _currentBottomSheet = MutableLiveData<Event<AppBottomSheetState>>(null)
+    val currentBottomSheet: LiveData<Event<AppBottomSheetState>>
+        get() = _currentBottomSheet
+
+    fun showBottomSheet(){
+        if (_currentBottomSheet.value is  Event){
+            _currentBottomSheet.value = null
+        }else {
+            _currentBottomSheet.value = Event(AppBottomSheetState.HomeScreenBS())
+        }
+    }
 
     // get students from the database
     private var _getStudents: LiveData<List<Student>> = MutableLiveData()
@@ -62,9 +74,10 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun onStudentDelete() {
+        println("deleting student with ids $selectedStudents")
         viewModelScope.launch(Dispatchers.IO) {
-            for (student in selectedStudents) {
-                //studentRepository.deleteStudent(student)
+            for (studentID in selectedStudents) {
+                studentRepository.deleteStudent(studentID)
             }
             // update UI state
             //_toolBarState.value = Event(HomeScreenToolBarState.StudentsDeleted(selectedStudents))
