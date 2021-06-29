@@ -114,7 +114,7 @@ fun HomeScreenContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                //onDeleteStudents()
+                                onDeleteStudents()
                             }
                             .padding(5.dp),
                     ){

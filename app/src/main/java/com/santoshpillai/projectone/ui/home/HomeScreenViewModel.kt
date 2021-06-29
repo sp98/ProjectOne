@@ -25,12 +25,12 @@ class HomeScreenViewModel @Inject constructor(
     val toolBarState: LiveData<Event<ToolBarState>>
         get() = _toolBarState
 
-    private val _currentBottomSheet = MutableLiveData<Event<AppBottomSheetState>>(null)
-    val currentBottomSheet: LiveData<Event<AppBottomSheetState>>
+    private val _currentBottomSheet = MutableLiveData<Event<AppBottomSheetState>?>(null)
+    val currentBottomSheet: LiveData<Event<AppBottomSheetState>?>
         get() = _currentBottomSheet
 
     fun showBottomSheet(){
-        if (_currentBottomSheet.value is  Event){
+        if (_currentBottomSheet.value?.peekContent() is AppBottomSheetState){
             _currentBottomSheet.value = null
         }else {
             _currentBottomSheet.value = Event(AppBottomSheetState.HomeScreenBS())
@@ -78,6 +78,10 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             for (studentID in selectedStudents) {
                 studentRepository.deleteStudent(studentID)
+            }
+            // Clear all selected Students on main thread
+            viewModelScope.launch {
+                onClearSelections()
             }
             // update UI state
             //_toolBarState.value = Event(HomeScreenToolBarState.StudentsDeleted(selectedStudents))
