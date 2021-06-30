@@ -5,11 +5,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StudentRepository @Inject constructor(private val studentDAO: StudentDAO){
+class StudentRepository @Inject constructor(private val studentDAO: StudentDAO) {
 
-    suspend fun insertNewStudent(student: Student) = studentDAO.insert(student)
+    suspend fun insertNewStudent(student: Student) {
+        studentDAO.insert(student)
+    }
 
-    fun deleteStudent(student: Student) = studentDAO.delete(student)
+    fun deleteStudent(studentID: Long) = studentDAO.delete(studentID)
 
     fun getAllStudents() = studentDAO.getAllStudents()
 }

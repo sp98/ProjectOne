@@ -5,8 +5,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -19,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.santoshpillai.projectone.R
 import com.santoshpillai.projectone.ui.NavActions
 import com.santoshpillai.projectone.ui.common.*
+import com.santoshpillai.projectone.ui.state.StudentState
 
 
 @ExperimentalComposeUiApi
@@ -29,6 +34,7 @@ fun AddStudentScreen(
 
 ) {
     val showSaveButton = addStudentViewModel.showAddButton()
+    val addStudentResult = addStudentViewModel.addStudentResult.observeAsState()
     Scaffold(
         topBar = {
             AddStudentTopBar(
@@ -39,7 +45,29 @@ fun AddStudentScreen(
         },
         bottomBar = {},
     ) {
-        AddStudentForm(addStudentViewModel)
+        when (val state = addStudentResult.value?.getContentIfNotHandled()) {
+            null -> AddStudentForm(addStudentViewModel)
+            is StudentState.Success -> {
+                println("successfully added new student ${state.students?.get(0)?.firstName}")
+                addStudentViewModel.reset()
+                navActions.toHomeScreen()
+            }
+            is StudentState.InProgress -> ShowProgress()
+            is StudentState.Error -> null
+        }
+    }
+}
+
+@Composable
+fun ShowProgress() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator()
     }
 }
 
@@ -65,7 +93,6 @@ fun AddStudentTopBar(
             AddStudentTopBarActions(
                 onAdd = {
                     viewModel.addStudent()
-                    navActions.toHomeScreen()
                     viewModel.reset()
                 },
                 showSaveButton = showSaveButton
@@ -120,7 +147,8 @@ fun AddStudentForm(
         TextField(
             mobileNumber,
             stringResource(R.string.mobile_number_label),
-            Icons.Filled.Phone)
+            Icons.Filled.Phone
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
         FormHelpText(text = stringResource(R.string.select_gender_label))
@@ -143,7 +171,7 @@ fun AddStudentForm(
             selectedOption = paymentStatus
         ) { addStudentViewModel.onPaymentStatusChange(it) }
 
-        if (paymentStatus.equals("PARTIAL", true)){
+        if (paymentStatus.equals("PARTIAL", true)) {
             TextField(
                 paidAmount,
                 stringResource(R.string.amount_paid_label),

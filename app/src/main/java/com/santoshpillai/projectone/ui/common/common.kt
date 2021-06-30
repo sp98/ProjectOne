@@ -1,6 +1,5 @@
 package com.santoshpillai.projectone.ui.common
 
-import android.app.Activity
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -9,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.*
-import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.google.android.material.datepicker.MaterialDatePicker
 
 @Composable
-fun FormLabel(label:String){
+fun FormLabel(label: String) {
     Text(
         text = label,
         style = MaterialTheme.typography.body2
@@ -28,7 +26,7 @@ fun FormLabel(label:String){
 }
 
 @Composable
-fun ScreenTitle(title:String){
+fun ScreenTitle(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.h6
@@ -39,8 +37,8 @@ fun ScreenTitle(title:String){
 fun AppButton(
     btnText: String,
     onClick: () -> Unit,
-    isEnabled : Boolean
-){
+    isEnabled: Boolean
+) {
     Button(
         onClick = onClick,
         enabled = isEnabled
@@ -60,13 +58,13 @@ fun HorizontalRadioButtonMenu(
             .fillMaxWidth()
     ) {
         options.forEachIndexed { i, text ->
-            val borderColor = if (selectedOption == text){
+            val borderColor = if (selectedOption == text) {
                 MaterialTheme.colors.primary.copy(alpha = 0.5f)
-            }else{
+            } else {
                 MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
             }
 
-            val backgroundColor = if (selectedOption == text){
+            val backgroundColor = if (selectedOption == text) {
                 MaterialTheme.colors.primary.copy(alpha = 0.12f)
             } else {
                 MaterialTheme.colors.background
@@ -101,7 +99,7 @@ fun HorizontalRadioButtonMenu(
                 }
             }
             // don't add spacer after last checkbox
-            if (i < options.size-1){
+            if (i < options.size - 1) {
                 Spacer(Modifier.weight(.1f))
             }
         }
@@ -109,7 +107,7 @@ fun HorizontalRadioButtonMenu(
 }
 
 @Composable
-fun ShowDatePicker(){
+fun ShowDatePicker() {
     val activity = LocalContext.current as AppCompatActivity
     val picker = MaterialDatePicker.Builder.datePicker()
         .build()
@@ -127,14 +125,14 @@ fun AppCheckbox(
     label: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
-){
-    val borderColor = if (checked){
+) {
+    val borderColor = if (checked) {
         MaterialTheme.colors.primary.copy(alpha = 0.5f)
-    }else{
+    } else {
         MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
     }
 
-    val backgroundColor = if (checked){
+    val backgroundColor = if (checked) {
         MaterialTheme.colors.primary.copy(alpha = 0.12f)
     } else {
         MaterialTheme.colors.background
@@ -160,7 +158,7 @@ fun AppCheckbox(
                 .padding(vertical = 12.dp, horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             FormLabel(label)
             Checkbox(
                 checked = checked,
@@ -174,7 +172,7 @@ fun AppCheckbox(
 
 @Preview(name = "HorizontalRadioButtonMenu")
 @Composable
-fun PreviewHorizontalRadioButtonMenu(){
+fun PreviewHorizontalRadioButtonMenu() {
     HorizontalRadioButtonMenu(
         listOf("Male", "Female"),
         "Female"

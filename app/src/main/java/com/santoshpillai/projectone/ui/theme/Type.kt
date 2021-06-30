@@ -44,7 +44,7 @@ val ProjectOneTypography = Typography(
         fontWeight = FontWeight.SemiBold,
         lineHeight = 37.sp,
     ),
-    h5= TextStyle(
+    h5 = TextStyle(
         fontFamily = AppFontFamily,
         fontSize = 24.sp,
         fontWeight = FontWeight.SemiBold,

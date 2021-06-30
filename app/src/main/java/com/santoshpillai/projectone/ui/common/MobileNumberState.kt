@@ -1,7 +1,5 @@
 package com.santoshpillai.projectone.ui.common
 
-import android.util.Log
-
 val phoneNumberRegex: Regex = "^\\d{10}\$".toRegex()
 
 class ContactTextFieldState : TextFieldState(
